@@ -1,3 +1,10 @@
+o que é o laravel ? um framework php
+em que arquitetura é baseado ? mvc
+m = model
+v = views
+c = controllers
+o que se faz com o laravel? sites com milhares de rotas de forma otimizada e com codigo limpo.
+
 Obs: Pastas a serem ignoradas, vendor, tests
 
 pastas importantes e suas funções
