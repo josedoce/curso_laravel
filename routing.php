@@ -44,3 +44,7 @@ Route::get('/admin',function(){
 		'reptil'=>'Cobra'
 	]);
 });
+//forma de metodo
+Route::get('/admin',function(){
+	return view('admin.admin')->with('nome','valor');
+});
