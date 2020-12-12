@@ -12,3 +12,16 @@ e chame da seguinte forma no web.php em routes
             url        'use'  'classe' com(@) ' metodo'
 Route::get('medicos',['uses'=>'medicosController@GetMedicos']);
 
+chamando um metodo controller sem o public definido
+
+Route::get('usuario', 'usuarioController@apresentarUsuario');
+
+//pegando parametros do route con controller
+defina o parametro a ser pego na rota
+Route::get('usuario/{parametrocontroller}', 'usuarioController@apresentarUsuario');
+
+
+depois coloque um parametro na função dentro do metodo no controller
+function apresentarUsuario($parametrocontroler=null){
+    	return "Estou na apresentacão do usuario: ".$nome;
+}
