@@ -1,0 +1,10 @@
+Obs: Pastas a serem ignoradas, vendor, tests
+
+pastas importantes e suas funções
+
+  1-public, onde fica o index.php o unico script que o usuario terá "acesso"
+  2-routes, onde ficam as rotas do aplicativo web
+  3-resources, onde ficam a view e seus scripts, js, linguagens, css
+
+
+
