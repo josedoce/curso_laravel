@@ -96,3 +96,19 @@ Route::get('/dados/{id_usuario}/{data}',function($id_usuario,$data){
 Route::get('/dados/{id_usuario?}',function($id_usuario=null){
 	return view('dados')->with('usuario',$id_usuario);
 });
+
+
+//nomeando rotas para simplificar o tabalho interno do sistema, por exemplo pra redenrizar um href linkado
+Route::get('/administrador/perfil/editar', array('as'=>'adm_per_edit', function(){
+	return route('adm_per_edit'); //http://docuraweb.test/administrador/perfil/editar
+	//isso facilita na hora de usar links interativos
+	//<a href="route('adm_per_edit')">Clicar aqui</a>
+}));
+
+//utilização de rotas nomeadas e simplificação
+Route::get('/administrador/configuracoes/editar',['as'=>'adm_con_edi', function(){
+	return view('admin/config/editar');
+}]);
+
+//relacionamento entre routes e controllers
+
