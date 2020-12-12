@@ -1,8 +1,9 @@
 o que é o laravel ? um framework php
 em que arquitetura é baseado ? mvc
-m = model
-v = views
-c = controllers
+m = model reponsabilidade de troca de dados entre a aplicação e o banco de dados
+v = views = responsabilidade de interação com o usuario
+c = controllers = reponsabilidae logica da aplicação com finalidade em entregar funções ao usuario 
+
 o que se faz com o laravel? sites com milhares de rotas de forma otimizada e com codigo limpo.
 
 Obs: Pastas a serem ignoradas, vendor, tests
