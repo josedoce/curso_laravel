@@ -167,4 +167,28 @@ https://packagecontrol.io/packages/Blade%20Snippets
      <hr>
    //valor padrao caso não ache dados
        <h2>Nenhum registro encontrado</h2>
-    
+  
+  
+//Passando dados de formulário para Controller
+	na rota defina um get com o formulario a ser exibido
+	Route::get('show','formularioController@show');
+	e uma rota de requisição
+	Route::post('registrar','formularioController@tratar');
+    	
+	depois, no formulario, inclua o autenticador laravel
+	<form method="POST" action="registrar">
+		@csrf
+		Usuário:
+		<input type="text" name="usuario">
+		Senha:
+		<input type="password" name="senha">
+		<br>
+		<input type="submit" name="entrar">
+	</form>
+	
+	depois, no controller, defina a logica, lembrando de tipar o dado com o Request
+	 	// O request no parametro é uma tipagem
+	    public function tratar(Request $req){
+		//aqui receberemos todos os dados de requisição
+		return $req['usuario'];
+	    }
