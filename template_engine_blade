@@ -1,3 +1,170 @@
 O que é o blade: O blade é um template engine usado pelo laravel para limpar o script view, evitando argumentos php de forma simples
 
+//renderizando um template blade 
+  class admUsuarioController extends Controller{
+    public function mostrarUsuarios(){
+    	//usuarios de nossa aplicação
+    	$usuarios = [
+    		'João',
+    		'Maria',
+    		'Jose',
+    		'Fernanda'
+    	];
+    	//apresentar a view com os usuarios
+      //mesma coisa que renderizar um view sem blade
+    	return view('show_usuarios',compact('usuarios'));
+    }
+}
 
+
+//Blade Snippets
+https://packagecontrol.io/packages/Blade%20Snippets
+
+//////////////////blade sintax basica//////////////////
+<div>
+	<h1>Blade template</h1>
+	<!-- forma verbosa de passar dados para o template -->
+	<p>Usuários registrados na plataforma:(PHP) <?php echo count($usuarios)?></p>
+	<!-- forma menos verbosa de passar dados para o template -->
+	<p>Usuários registrados na plataforma:(BLADE) {{count($usuarios)}}</p>
+
+	<h1>Sintax basica do blade</h1>
+	<strong>Comentarios:</strong>
+	<p>comentario: {{--Eu sou um comentario em blade--}}</p>
+
+	{{-- para escrever codigo php puro no view nós utilizamos: --}}
+	@php
+		$id = 99;
+		$func = '@';
+		//comentario php
+		echo 'Sou php dentro de um @php e '.$func.'endphp';
+	@endphp
+
+	{{-- bloco de código condicional - IF statement --}}
+	@if(count($usuarios)>0 and count($usuarios)!= 1)
+
+		<p>Fantastico, há {{count($usuarios)}} usuarios.</p>
+
+	@elseif(count($usuarios)===1)
+
+		<p>Fantastico, há {{count($usuarios)}} usuario. </p>
+
+	@else
+
+		<p>Não há usuarios</p>
+
+	@endif
+
+	{{-- bloco de código condicional - unless(caso algo não seja verdade, execute) statement --}}
+	@unless($id===100)
+		{{-- se o $id for igual a 100, então não irei executar esse codigo --}}
+		<p>Limite por pagina é de 100, vá para proxima e veja mais.</p>
+	@endunless
+</div>
+
+@php
+	$nome;
+@endphp
+@isset ($nome)
+  //se a variavel estiver definida exiba
+    <p>Meu nome é: {{$nome}}</p>
+@endisset
+@empty ($nome)
+	{{-- se estiver vazio esse bloco executa --}}
+    <p>O nome de fulano está vazio</p>
+@endempty
+@for ($i = 0; $i < 20; $i++)
+	<p>video {{$i}}</p>
+@endfor
+
+//blade layouts
+    regra do layout/base.blade.php
+    {{-- header / cabeçalho --}}
+		<header>
+			{{-- adicao de conteudo --}}
+			@yield('cabecalho')
+		</header>
+    na view/contato.blade.php ou qualquer outro que quiser definir
+    @extends('layouts.base')
+      @section('cabecalho')
+        conteudo que sera renderizado na base
+      @endsection
+    
+    com o uso do @parent e uma @section definida na template base, obrigamos a base a renderizar a base e o conteudo não base
+    //nabase
+    @section('boasvindas')
+			<p>bem vindo:</p>		
+		@show
+    //no conteudo consumidor da base
+    @section('boasvindas')
+	    {{-- sem o parent, a base deixa de ser exibida --}}
+        @parent
+        <p>joseildo</p>
+    @endsection
+    
+    //usando componentes e enviando dados para o componente
+    usando slot padrao
+    @component('componente_mensagem')
+      dados para o $slot em um componente com o {{$slot}} no elemento
+    @endcomponent
+    usando slot customizado
+    @component('componente_mensagem')
+        @slot('titulo')
+            joseildo
+        @endslot
+
+        @slot('mensagem')
+            Solicitação de combate para joseildo.
+        @endslot
+    @endcomponent
+    
+    //blade e include de subviews
+    @include('inc.dados') pega o view e inclui 
+    
+    @php
+        $nomes = [
+          'João',
+          'Maria',
+          'Joana',
+          'Fernanda'
+        ];
+	  @endphp
+    @foreach ($nomes as $nome)
+      {{-- esse include exibe erro se não encontrar o include --}}
+      {{-- @include('inc.dado') --}}
+      {{-- esse não irá gerar erro se não conseguir achar, simplesmente ele ignora e continua o fluxo --}}
+      @includeIf('inc.dado')
+    @endforeach
+    ao incluir, os dados da pagina serão herdados de forma reciproca com <p>Nome: <strong>{{$nome}}</strong></p> no documento incluido
+    
+    
+    //lopings
+    {{-- for loop --}}
+    @for($i = 0; $i < $max; $i++)
+      <p>pessoa {{$i}}</p>
+    @endfor
+
+    {{-- foreach loop --}}
+    @foreach($nomes as $nome)
+      @if($loop->first)
+        <p style="background-color: lightgreen;">{{$nome}}</p>
+      @elseif($loop->last)
+        <p style="background-color: red;">{{$nome}}</p>
+      @else
+        <p style="background-color: gray;">{{$nome}}</p>
+      @endif
+    @endforeach
+    
+    //blade views para coleções
+    recomendado para exibir muitos dados de um objeto na view com o @each
+    //view chamado pelo controller
+      <h1>TESTES DE VIES PARA COLEÇÕES</h1>
+      <hr>
+      {{-- pegue linha, os nomes, coloque em nome e exiba, caso venha vazio, renderize o aviso 'vazio'--}}
+      @each ('linha', $nomes, 'nome', 'vazio')
+   //incluir tabela onde sera estilizado e renderizado os dados
+      <p>Nome: {{$nome}}</p>
+     <hr>
+   //valor padrao caso não ache dados
+       <h2>Nenhum registro encontrado</h2>
+    
