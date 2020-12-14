@@ -64,4 +64,32 @@ importante
         exemplo:  DB::table('cliente')->get(); irá funcionar no shell tinker, é bom para testes
                   DB::table('cliente')->where('id_cliente',19)->get();
         exercicios: 
-        
+        	insira db
+//querybuilder exercicios
+		    documento: https://laravel.com/docs/8.x/queries
+	use Illuminate\Support\Facades\DB; //obirgatorio colocar no controller 
+	//seleciona uma coluna select() aceita
+	    // um ou mais cmapos //$dados = DB::table('clientes')->select('nome')->get();
+	    // $dados = DB::table('clientes')
+	    //     ->where('id_cliente', '=',$id)
+	    //     ->select('email')
+	    //     ->get();
+		$dados = DB::table('clientes')
+		    ->where('cidade','Petrópolis')
+		    ->where('nome','Antonio')
+		    ->get();
+		    
+		    
+//eloquente ORM
+	Criando uma migration e um model com : php artisan make:model vendas -m
+		   os models ficam na pasta app
+		    cuidado com os s
+		    
+//eloquente Orm relação entre model e table
+	importando o model
+		use App\cliente;
+		//query builder
+	//$dados = DB::table('clientes')->get();
+		//eloquente orm
+	$dados = cliente::where('nome','Joao')->get();
+		    
