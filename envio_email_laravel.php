@@ -99,3 +99,25 @@ documentos: https://laravel.com/docs/8.x/mail#plain-text-emails
 depois configure o .env e coloque os dados de serviço de email
 
 depois no model, importe use Illuminate\Support\Facedes\Mail;
+
+
+//forma simples de enviar emails sem o model mailer ser importado
+      basta colocar isso no controller e pronto
+        Mail::send('emails.index',[],function($message){
+                $message->to('438405ca4f-8c6f84@inbox.mailtrap.io');
+                $message->subject('Este é o assunto da mensagem');
+                $message->bcc('ocultar o chefe que recebe confirmação do envio');
+                $message->cc('email do chefe que sabe sobre o envio');
+          
+          
+        });
+
+//envio de anexos pelo email
+Mail::send('emails.file',[],function($message){
+            $message->to('438405ca4f-8c6f84@inbox.mailtrap.io');
+            $message->subject('Este é o assunto da mensagem');
+            $message->attach(url('/teste.txt'),[
+                'as'=>'name.txt', //tipo de conteudo
+                'mime'=>'application/txt'
+            ]);
+        });
