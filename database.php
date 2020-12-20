@@ -93,3 +93,39 @@ importante
 		//eloquente orm
 	$dados = cliente::where('nome','Joao')->get();
 		    
+		
+	    
+//relações
+	//relacionamento na platica
+	//clientes
+        Schema::create('clientes', function (Blueprint $table) {
+            $table->id('id_cliente');
+            $table->string('nome');
+            $table->string('email');
+            $table->timestamps();
+        });
+        //vendas
+        Schema::create('vendas', function (Blueprint $table) {
+            $table->id('id_vendas');
+            //obrigatoriamente o referenciado tem que ser unsignedBigInteger, pois o id cliente é autoincrement big integer e unsigned
+            $table->unsignedBigInteger('id_cliente');
+            $table->string('produto');
+            $table->decimal('preco',2);
+            $table->timestamps();
+            //confirmaçao da relação entre vendas e clientes
+            $table->foreign('id_cliente')->references('id_cliente')->on('clientes')->onDelete('cascade'); 
+        });
+		    
+		    //relacao de um para um
+		    
+		    exemplo pratico
+		    	-------------------
+		    	cliente
+		    		id_cliente
+		    		nome
+		    
+		    	one to one // cliente tem telefone
+		    	-------------------
+		    	telefone
+		    		id_telefone
+		    		numero
